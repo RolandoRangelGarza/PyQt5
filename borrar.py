@@ -1,32 +1,28 @@
 import sys
-from PyQt5 import (QLineEdit, QPushButton, QApplication,
-    QVBoxLayout, QDialog)
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 
-class Form(QDialog):
+def ventana():
+   app = QApplication(sys.argv)
+   w = QWidget()
+   boton = QPushButton(w)
+   boton.setText("Guardar archivo")
+   boton.move(100,50)
+   boton.clicked.connect(mostrardialogo)
+   w.setWindowTitle("PyQt Dialog demo")
+   w.show()
+   sys.exit(app.exec_())
 
-    def __init__(self, parent=None):
-        super(Form, self).__init__(parent)
-        # Create widgets
-        self.edit = QLineEdit("Write my name here")
-        self.button = QPushButton("Show Greetings")
-        # Create layout and add widgets
-        layout = QVBoxLayout()
-        layout.addWidget(self.edit)
-        layout.addWidget(self.button)
-        # Set dialog layout
-        self.setLayout(layout)
-        # Add button signal to greetings slot
-        self.button.clicked.connect(self.greetings)
-
-    # Greets the user
-    def greetings(self):
-        print ("Hello %s" % self.edit.text())
+def mostrardialogo():
+   dlg = QDialog()
+   label = QLabel("Archivo guardado exitosamente")
+   label.move(50,50)
+   dlg.addWidget(label)
+   dlg.setWindowTitle("Dialog") #9. PyQt5 — QDialog Class
+   dlg.setWindowModality(Qt.ApplicationModal)
+   dlg.exec_()
+   
 
 if __name__ == '__main__':
-    # Create the Qt Application
-    app = QApplication(sys.argv)
-    # Create and show the form
-    form = Form()
-    form.show()
-    # Run the main Qt loop
-    sys.exit(app.exec_())
+   ventana()
